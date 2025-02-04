@@ -1,14 +1,13 @@
 package com.study.boardPage.board.application;
 
 import com.study.boardPage.board.domain.Board;
+import com.study.boardPage.board.dto.req.BoardCreateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
 import com.study.boardPage.board.infrastructure.BoardRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,5 +38,15 @@ public class BoardService {
                 ))
                 .collect(Collectors.toList());
         return new BoardAllDto(boardList);
+    }
+
+    public Integer addBoard(BoardCreateDto boardCreateDto) {
+        Board board = new Board();
+        board.setTitle(boardCreateDto.getTitle());
+        board.setContent(boardCreateDto.getContent());
+        board.setBoardType(boardCreateDto.getBoardType());
+        board.setRgdt(LocalDateTime.now());
+        Board  saveboard = boardRepository.save(board);
+        return saveboard.getId();
     }
 }
