@@ -1,14 +1,12 @@
 package com.study.boardPage.board.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Board {
+public class Board implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -24,4 +22,9 @@ public class Board {
     private String title;
     private String content;
     private LocalDateTime rgdt;
+//    @PrePersist
+//    public void prePersist() {
+//        this.rgdt = LocalDateTime.now().withNano(0);
+//    }
+
 }
