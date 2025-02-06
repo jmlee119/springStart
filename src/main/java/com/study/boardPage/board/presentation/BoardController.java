@@ -55,19 +55,17 @@ public class BoardController {
 //    }
 
     @GetMapping("/board")
-    public ResponseEntity<BoardAllDto> getBoardAll() {
+    public ResponseEntity<ApiResponse<BoardAllDto>> getBoardAll() {
         BoardAllDto board = boardService.getAllBoards();
         if (board != null) {
-            return new ResponseEntity<>(board, HttpStatus.OK);
+            return ResponseEntity.ok(ApiResponse.success(board));
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.fail("작성 글이 없습니다.",404));
     }
     @PostMapping("/board")
     public ResponseEntity<BoardCreateDto> addBoard(@RequestBody BoardCreateDto boardCreateDto) {
         boardService.addBoard(boardCreateDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-
 
 }
