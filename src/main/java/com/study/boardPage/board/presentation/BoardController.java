@@ -63,9 +63,10 @@ public class BoardController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.fail("작성 글이 없습니다.",404));
     }
     @PostMapping("/board")
-    public ResponseEntity<BoardCreateDto> addBoard(@RequestBody BoardCreateDto boardCreateDto) {
+    public ResponseEntity<ApiResponse<BoardCreateDto>> addBoard(@RequestBody BoardCreateDto boardCreateDto) {
         boardService.addBoard(boardCreateDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        return ResponseEntity.ok(ApiResponse.success(boardCreateDto));
     }
 
 }
