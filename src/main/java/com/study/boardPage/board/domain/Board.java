@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,10 +23,11 @@ public class Board implements Serializable {
     private int boardType;
     private String title;
     private String content;
+    @LastModifiedDate
     private LocalDateTime rgdt;
-//    @PrePersist
-//    public void prePersist() {
-//        this.rgdt = LocalDateTime.now().withNano(0);
-//    }
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }

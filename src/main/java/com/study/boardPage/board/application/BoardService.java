@@ -2,9 +2,11 @@ package com.study.boardPage.board.application;
 
 import com.study.boardPage.board.domain.Board;
 import com.study.boardPage.board.dto.req.BoardCreateDto;
+import com.study.boardPage.board.dto.req.BoradUpdateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
 import com.study.boardPage.board.infrastructure.BoardRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -48,5 +50,11 @@ public class BoardService {
         board.setRgdt(LocalDateTime.now());
         Board  saveboard = boardRepository.save(board);
         return saveboard.getId();
+    }
+    @Transactional
+    public Integer updateBoard(BoradUpdateDto boradUpdateDto) {
+        Board board = boardRepository.findById(boradUpdateDto.getBoardId()).orElseThrow(()->new IllegalArgumentException("글 찾을 수 없습니다."));
+        board.update(boradUpdateDto.getTitle(), boradUpdateDto.getContent());
+        return board.getId();
     }
 }

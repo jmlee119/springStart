@@ -3,6 +3,7 @@ package com.study.boardPage.board.presentation;
 import com.study.boardPage.board.application.BoardService;
 import com.study.boardPage.board.domain.Board;
 import com.study.boardPage.board.dto.req.BoardCreateDto;
+import com.study.boardPage.board.dto.req.BoradUpdateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
 import com.study.boardPage.board.infrastructure.BoardRepository;
@@ -68,5 +69,9 @@ public class BoardController {
 
         return ResponseEntity.ok(ApiResponse.success(boardCreateDto));
     }
-
+    @PatchMapping("/board")
+    public ResponseEntity<ApiResponse<BoradUpdateDto>> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto) {
+        boardService.updateBoard(boradUpdateDto);
+        return ResponseEntity.ok(ApiResponse.success(boradUpdateDto));
+    }
 }
