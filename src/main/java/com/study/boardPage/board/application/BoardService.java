@@ -52,6 +52,8 @@ public class BoardService {
         return saveboard.getId();
     }
     @Transactional
+    // jpa 엔티티 변경 감지 기능이 작동하려면 트랜잭션 안에서 엔티티를 변경해야함 (update 시 필요)
+    // 읽기전용 => transactional 필요없음
     public Integer updateBoard(BoradUpdateDto boradUpdateDto) {
         Board board = boardRepository.findById(boradUpdateDto.getBoardId()).orElseThrow(()->new IllegalArgumentException("글 찾을 수 없습니다."));
         board.update(boradUpdateDto.getTitle(), boradUpdateDto.getContent());
