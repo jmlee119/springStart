@@ -20,11 +20,3 @@ public class ApiResponse<T> {
 
     }
 }
-//{
-//        "isSuccess": true,
-//        "message": "요청에 성공하였습니다.",
-//        "code": 200,
-//        "result": {
-//        "":""
-//        }
-//        }
