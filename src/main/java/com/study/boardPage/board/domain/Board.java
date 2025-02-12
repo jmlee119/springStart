@@ -23,11 +23,11 @@ public class Board implements Serializable {
     private int boardType;
     private String title;
     private String content;
-    @LastModifiedDate
     private LocalDateTime rgdt;
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+        this.rgdt = LocalDateTime.now();
     }
 }
