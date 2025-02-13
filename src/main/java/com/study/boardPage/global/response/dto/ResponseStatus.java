@@ -12,6 +12,7 @@ public enum ResponseStatus {
     INTERNAL_SERVER_ERROR(false, 900, "Internal server error");
     // 게시판
 
+
     private final boolean isSuccess;
     private final int code;
     private final String message;
