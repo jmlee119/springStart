@@ -39,4 +39,24 @@ public record BaseResponse<T>(
                 null
         );
     }
+    // 실패했을때 -> 공통된 에러메세지 일관되게 사용
+    public static BaseResponse<Void> fail(ErrorCode code) {
+        return new BaseResponse<>(
+                code.getHttpStatus(),
+                code.getIsSuccess(),
+                code.getMessage(),
+                code.getCode(),
+                null
+        );
+    }
+    // 실패했을때 -> 특정 상황에 맞게 메세지를 커스터마이징
+    public static BaseResponse<Void> fail(ErrorCode code, String message) {
+        return new BaseResponse<>(
+                code.getHttpStatus(),
+                code.getIsSuccess(),
+                message,
+                code.getCode(),
+                null
+        );
+    }
 }
