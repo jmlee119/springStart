@@ -7,6 +7,9 @@ import com.study.boardPage.board.dto.req.BoradUpdateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
 import com.study.boardPage.board.infrastructure.BoardRepository;
+import com.study.boardPage.global.exception.BaseException;
+import com.study.boardPage.global.response.BaseResponse;
+import com.study.boardPage.global.response.SuccessCode;
 import com.study.boardPage.global.response.dto.ApiResponse;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -17,40 +20,30 @@ import java.util.concurrent.TimeUnit;
 @RestController // controller는 view 를 반환 restcontroller data 반환
 @RequestMapping("/api/v1")
 public class BoardController {
-
     private final BoardService boardService;
-    private final BoardRepository boardRepository;
 
-    public BoardController(BoardService boardService, BoardRepository boardRepository) {
+    public BoardController(BoardService boardService) {
         this.boardService = boardService;
-        this.boardRepository = boardRepository;
     }
     @GetMapping("/board/{id}")
-    public ResponseEntity<ApiResponse<BoardReadDto>> getBoardID(@PathVariable(name="id") int id) {
+    public BaseResponse<BoardReadDto> getBoardID(@PathVariable(name = "id") int id){
         BoardReadDto board = boardService.getBoardById(id);
-        if (board != null) {
-            return ResponseEntity.ok(ApiResponse.success(board));
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.fail("게시글을 찾을 수 없습니다",404));
+        return BaseResponse.ok(SuccessCode.BOARD_READ_SUCCESS, board);
     }
 
     @GetMapping("/board")
-    public ResponseEntity<ApiResponse<BoardAllDto>> getBoardAll() {
+    public BaseResponse<BoardAllDto> getBoardAll() {
         BoardAllDto board = boardService.getAllBoards();
-        if (board != null) {
-            return ResponseEntity.ok(ApiResponse.success(board));
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.fail("작성 글이 없습니다.",404));
+        return BaseResponse.ok(SuccessCode.BOARD_READALL_SUCCESS, board);
     }
     @PostMapping("/board")
-    public ResponseEntity<ApiResponse<BoardCreateDto>> addBoard(@RequestBody BoardCreateDto boardCreateDto) {
+    public BaseResponse<BoardCreateDto> addBoard(@RequestBody BoardCreateDto boardCreateDto) {
         boardService.addBoard(boardCreateDto);
-
-        return ResponseEntity.ok(ApiResponse.success(boardCreateDto));
+        return BaseResponse.ok(SuccessCode.BOARD_CREATE_SUCCESS, boardCreateDto);
     }
     @PatchMapping("/board")
-    public ResponseEntity<ApiResponse<BoradUpdateDto>> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto) {
+    public BaseResponse<BoradUpdateDto> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto) {
         boardService.updateBoard(boradUpdateDto);
-        return ResponseEntity.ok(ApiResponse.success(boradUpdateDto));
+        return BaseResponse.ok(SuccessCode.BOARD_UPDATE_SUCCESS, boradUpdateDto);
     }
 }
