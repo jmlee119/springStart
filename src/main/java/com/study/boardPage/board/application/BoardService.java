@@ -64,4 +64,10 @@ public class BoardService {
         board.update(boradUpdateDto.getTitle(), boradUpdateDto.getContent());
         return board.getId();
     }
+    @Transactional
+    public Integer deleteBoard(int id) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.BOARD_DELETE_FAILED));
+        boardRepository.delete(board);
+        return board.getId();
+    }
 }

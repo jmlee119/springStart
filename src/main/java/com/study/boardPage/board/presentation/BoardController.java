@@ -1,7 +1,6 @@
 package com.study.boardPage.board.presentation;
 
 import com.study.boardPage.board.application.BoardService;
-import com.study.boardPage.board.domain.Board;
 import com.study.boardPage.board.dto.req.BoardCreateDto;
 import com.study.boardPage.board.dto.req.BoradUpdateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
@@ -37,5 +36,10 @@ public class BoardController {
     public BaseResponse<BoradUpdateDto> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto) {
         boardService.updateBoard(boradUpdateDto);
         return BaseResponse.ok(SuccessCode.BOARD_UPDATE_SUCCESS, boradUpdateDto);
+    }
+    @DeleteMapping("/board/{id}")
+    public BaseResponse<Integer> deleteBoard(@PathVariable(name = "id") int id) {
+        boardService.deleteBoard(id);
+        return BaseResponse.ok(SuccessCode.BOARD_DELETE_SUCCESS, id);
     }
 }
