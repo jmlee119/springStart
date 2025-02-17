@@ -6,17 +6,9 @@ import com.study.boardPage.board.dto.req.BoardCreateDto;
 import com.study.boardPage.board.dto.req.BoradUpdateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
-import com.study.boardPage.board.infrastructure.BoardRepository;
-import com.study.boardPage.global.exception.BaseException;
 import com.study.boardPage.global.response.BaseResponse;
 import com.study.boardPage.global.response.SuccessCode;
-import com.study.boardPage.global.response.dto.ApiResponse;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.concurrent.TimeUnit;
-
 @RestController // controller는 view 를 반환 restcontroller data 반환
 @RequestMapping("/api/v1")
 public class BoardController {

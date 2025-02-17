@@ -7,7 +7,6 @@ import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
 import com.study.boardPage.board.infrastructure.BoardRepository;
 import com.study.boardPage.global.exception.BaseException;
-import com.study.boardPage.global.response.BaseResponse;
 import com.study.boardPage.global.response.ErrorCode;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
