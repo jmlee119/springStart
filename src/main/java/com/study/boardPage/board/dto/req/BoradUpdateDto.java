@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoradUpdateDto {
-    private int boardId;
+    private int id;
     private String title;
     private String content;
 }
