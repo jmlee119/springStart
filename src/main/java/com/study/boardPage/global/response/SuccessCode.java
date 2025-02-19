@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum SuccessCode {
     // 회원
+    USER_CREATE_SUCCESS(HttpStatus.CREATED, Boolean.TRUE, 201, "회원가입이 완료 되었습니다"),
 
     // 게시판
     BOARD_CREATE_SUCCESS(HttpStatus.CREATED, Boolean.TRUE, 201, "게시글이 작성되었습니다."),
