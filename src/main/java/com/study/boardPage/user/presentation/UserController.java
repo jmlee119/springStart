@@ -1,11 +1,9 @@
 package com.study.boardPage.user.presentation;
 
-import com.study.boardPage.global.exception.BaseException;
 import com.study.boardPage.global.response.BaseResponse;
 import com.study.boardPage.global.response.SuccessCode;
 import com.study.boardPage.user.application.UserService;
 import com.study.boardPage.user.dto.SignupDto;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

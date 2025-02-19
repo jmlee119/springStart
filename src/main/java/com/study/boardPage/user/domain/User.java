@@ -22,4 +22,5 @@ public class User {
     private String password;
     @Column(unique = true, length = 20)
     private String nickname;
+    private int status;
 }
