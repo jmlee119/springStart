@@ -1,6 +1,5 @@
 package com.study.boardPage.user.domain;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +17,11 @@ public class User {
     private int id;
     @Column(unique = true, nullable = false)
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String password;
     @Column(unique = true, length = 20)
     private String nickname;
+    
+    // status 1 활성 / 2 탈퇴 / 3 관리자
     private int status;
 }

@@ -10,7 +10,8 @@ public enum ErrorCode {
     // 1000 ~ 1999 인증, 인가 에러
 
     // 2000 ~ 2999 회원 서비스
-
+    USER_EMAIL_EXIST_FAILED(HttpStatus.BAD_REQUEST, Boolean.FALSE, 2001, "이미 존재하는 이메일입니다"),
+    USER_NICKNAME_EXIST_FAILED(HttpStatus.BAD_REQUEST, Boolean.FALSE, 2002, "이미 존재하는 닉네임입니다"),
     // 3000 ~ 3999 게시판 서비스
     BOARD_CREATE_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3001, "글 작성 실패"),
     BOARD_READ_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3002, "글 조회 불가"),
