@@ -7,6 +7,7 @@ import com.study.boardPage.user.dto.SignupDto;
 import com.study.boardPage.user.infrastructure.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public SignupDto signUp(SignupDto signupDto) {
         Optional<User> email = userRepository.findByEmail(signupDto.getEmail());
@@ -33,7 +35,7 @@ public class UserService {
         }
         User user = new User();
         user.setEmail(signupDto.getEmail());
-        user.setPassword(new BCryptPasswordEncoder().encode(signupDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         user.setNickname(signupDto.getNickname());
         user.setStatus(1);
         userRepository.save(user);
