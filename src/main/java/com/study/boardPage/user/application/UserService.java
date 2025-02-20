@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -18,7 +19,6 @@ public class UserService {
     private final UserRepository userRepository;
 
     public SignupDto signUp(SignupDto signupDto) {
-        System.out.println("실행되는지 확인");
         Optional<User> email = userRepository.findByEmail(signupDto.getEmail());
         if (email.isPresent()) {
             throw new BaseException(ErrorCode.USER_EMAIL_EXIST_FAILED);
@@ -26,6 +26,10 @@ public class UserService {
         Optional<User> nickname = userRepository.findByNickname(signupDto.getNickname());
         if (nickname.isPresent()) {
             throw new BaseException(ErrorCode.USER_NICKNAME_EXIST_FAILED);
+        }
+        String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$";
+        if (!Pattern.matches(passwordRegex, signupDto.getPassword())) {
+            throw new BaseException(ErrorCode.USER_PASSWORD_VALIDATION_FAILED);
         }
         User user = new User();
         user.setEmail(signupDto.getEmail());
