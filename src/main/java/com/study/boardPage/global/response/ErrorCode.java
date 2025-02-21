@@ -13,6 +13,8 @@ public enum ErrorCode {
     USER_EMAIL_EXIST_FAILED(HttpStatus.BAD_REQUEST, Boolean.FALSE, 2001, "이미 존재하는 이메일입니다"),
     USER_NICKNAME_EXIST_FAILED(HttpStatus.BAD_REQUEST, Boolean.FALSE, 2002, "이미 존재하는 닉네임입니다"),
     USER_PASSWORD_VALIDATION_FAILED(HttpStatus.BAD_REQUEST, Boolean.FALSE, 2002, "비밀번호는 8~20자의 영문, 숫자, 특수문자를 포함해야 합니다."),
+    
+    USER_LOGIN_ERROR_FAILED(HttpStatus.BAD_REQUEST, Boolean.FALSE, 2004 , "로그인 실패"),
     // 3000 ~ 3999 게시판 서비스
     BOARD_CREATE_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3001, "글 작성 실패"),
     BOARD_READ_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3002, "글 조회 불가"),

@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum SuccessCode {
     // 회원
     USER_CREATE_SUCCESS(HttpStatus.CREATED, Boolean.TRUE, 201, "회원가입이 완료 되었습니다"),
-
+    USER_LOGIN_SUCCESS(HttpStatus.OK, Boolean.TRUE, 202, "로그인 완료"),
     // 게시판
     BOARD_CREATE_SUCCESS(HttpStatus.CREATED, Boolean.TRUE, 201, "게시글이 작성되었습니다."),
     BOARD_READ_SUCCESS(HttpStatus.OK, Boolean.TRUE, 200, "글을 읽을 수 있습니다"),

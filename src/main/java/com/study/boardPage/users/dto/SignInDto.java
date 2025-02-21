@@ -1,4 +1,4 @@
-package com.study.boardPage.user.dto;
+package com.study.boardPage.users.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignupDto {
+public class SignInDto {
     private String email;
     private String password;
-    private String nickname;
 }
