@@ -2,6 +2,7 @@ package com.study.boardPage.users.application;
 
 import com.study.boardPage.global.exception.BaseException;
 import com.study.boardPage.global.response.ErrorCode;
+import com.study.boardPage.security.JwtTokenProvider;
 import com.study.boardPage.users.domain.Users;
 import com.study.boardPage.users.dto.SignInDto;
 import com.study.boardPage.users.dto.SignupDto;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public SignupDto signUp(SignupDto signupDto) {
         Optional<Users> email = userRepository.findByEmail(signupDto.getEmail());
@@ -53,11 +55,19 @@ public class UserService {
 //                new ArrayList<>() // 권한 없이 로그인 처리
 //        );
 //    }
-    public SignInDto login(SignInDto signInDto) {
+    public String login(SignInDto signInDto) {
         Optional<Users> user = Optional.ofNullable(userRepository.findByEmail(
                 signInDto.getEmail()).orElseThrow(() -> new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED)));
         if (passwordEncoder.matches(signInDto.getPassword(), user.get().getPassword())) {
-            return signInDto;
+            String accessToken = jwtTokenProvider.getAccessToken(user.get().getId());  // 유저의 ID로 토큰 생성
+            System.out.println(accessToken);
+//
+//            // SignInDto에 토큰과 아이디를 담아서 반환
+//            SignInDto result = new SignInDto();
+//            result.setEmail(signInDto.getEmail());
+//            result.setPassword(accessToken);  // JWT 토큰을 password 필드에 넣을 수 있음
+
+            return accessToken;
         }
         else{
             throw new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED);

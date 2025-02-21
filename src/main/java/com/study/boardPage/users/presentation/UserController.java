@@ -23,8 +23,8 @@ public class UserController {
         return BaseResponse.ok(SuccessCode.USER_CREATE_SUCCESS,signupDto);
     }
     @PostMapping("/login")
-    public BaseResponse<SignInDto> login(@RequestBody SignInDto signInDto) {
-        userService.login(signInDto);
-        return BaseResponse.ok(SuccessCode.USER_LOGIN_SUCCESS,signInDto);
+    public BaseResponse<String> login(@RequestBody SignInDto signInDto) {
+        String token = userService.login(signInDto);
+        return BaseResponse.ok(SuccessCode.USER_LOGIN_SUCCESS,token);
     }
 }
