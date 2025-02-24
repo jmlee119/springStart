@@ -1,5 +1,6 @@
 package com.study.boardPage.board.domain;
 
+import com.study.boardPage.users.domain.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class Board implements Serializable {
     private String title;
     private String content;
     private LocalDateTime rgdt;
+
+    @ManyToOne
+    private Users users;
 
     public void update(String title, String content) {
         this.title = title;

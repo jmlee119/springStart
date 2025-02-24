@@ -1,5 +1,6 @@
 package com.study.boardPage.users.domain;
 
+import com.study.boardPage.board.domain.Board;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,5 +31,6 @@ public class Users  {
     // status 1 활성 / 2 탈퇴 / 3 관리자
     private int status;
 
-
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<Board> board;
 }
