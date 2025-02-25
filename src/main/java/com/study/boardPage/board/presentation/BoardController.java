@@ -28,8 +28,9 @@ public class BoardController {
         return BaseResponse.ok(SuccessCode.BOARD_READALL_SUCCESS, board);
     }
     @PostMapping("/board")
-    public BaseResponse<BoardCreateDto> addBoard(@RequestBody BoardCreateDto boardCreateDto) {
-        boardService.addBoard(boardCreateDto);
+    public BaseResponse<BoardCreateDto> addBoard(@RequestBody BoardCreateDto boardCreateDto, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        boardService.addBoard(boardCreateDto, token);
         return BaseResponse.ok(SuccessCode.BOARD_CREATE_SUCCESS, boardCreateDto);
     }
     @PatchMapping("/board")
