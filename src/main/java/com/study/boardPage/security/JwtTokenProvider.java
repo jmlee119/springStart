@@ -41,11 +41,11 @@ public class JwtTokenProvider {
 
     // token 발급
     public String createToken(String userId, long exp) {
-        return Jwts.builder().
+        return Jwts.builder()
                 // subject : 토큰의 주인(user id)를 나타냄
-                subject(userId).
+                .subject(userId)
                 //토큰일 발급된 시간
-                issuedAt(new Date(System.currentTimeMillis()))
+                .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + exp))
                 // jwt signature 생성
                 //HS256 알고리즘을 사용하여 서명
