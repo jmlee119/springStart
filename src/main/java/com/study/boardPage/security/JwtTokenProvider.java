@@ -29,12 +29,12 @@ public class JwtTokenProvider {
         this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
     }
     // access token 발급
-    public String getAccessToken(int userId) {
+    public String getAccessToken(Long userId) {
         return createToken(String.valueOf(userId), accessTokenValiditySeconds);
     }
 
     //refresh token 발급
-    public String getRefreshToken(int userId) {
+    public String getRefreshToken(Long userId) {
         return createToken(String.valueOf(userId), refreshTokenValiditySeconds);
     }
 

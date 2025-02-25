@@ -70,14 +70,25 @@ public class BoardService {
     @Transactional
     // jpa 엔티티 변경 감지 기능이 작동하려면 트랜잭션 안에서 엔티티를 변경해야함 (update 시 필요)
     // 읽기전용 => transactional 필요없음
-    public Integer updateBoard(BoradUpdateDto boradUpdateDto) {
+    public Integer updateBoard(BoradUpdateDto boradUpdateDto, String token) {
         Board board = boardRepository.findById(boradUpdateDto.getId()).orElseThrow(()->new BaseException(ErrorCode.BOARD_READ_FAILED));
+        String userId = jwtHTokenHeaderFilter.getUserIdFromToken(token);
+        Users users = userRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new BaseException(ErrorCode.USER_NONFOUND_FAILED));
+        if (!board.getUsers().getId().equals(users.getId())) {
+            throw new BaseException(ErrorCode.BOARD_USER_UPDATE_FAILED);
+        }
+
         board.update(boradUpdateDto.getTitle(), boradUpdateDto.getContent());
         return board.getId();
     }
     @Transactional
-    public Integer deleteBoard(int id) {
+    public Integer deleteBoard(int id, String token) {
         Board board = boardRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.BOARD_DELETE_FAILED));
+        String userId = jwtHTokenHeaderFilter.getUserIdFromToken(token);
+        Users users = userRepository.findById(Long.parseLong(userId)).orElseThrow(() -> new BaseException(ErrorCode.USER_NONFOUND_FAILED));
+        if (!board.getUsers().getId().equals(users.getId())) {
+            throw new BaseException(ErrorCode.BOARD_DELETE_FAILED);
+        }
         boardRepository.delete(board);
         return board.getId();
     }

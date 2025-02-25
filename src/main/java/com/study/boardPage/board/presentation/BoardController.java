@@ -34,13 +34,15 @@ public class BoardController {
         return BaseResponse.ok(SuccessCode.BOARD_CREATE_SUCCESS, boardCreateDto);
     }
     @PatchMapping("/board")
-    public BaseResponse<BoradUpdateDto> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto) {
-        boardService.updateBoard(boradUpdateDto);
+    public BaseResponse<BoradUpdateDto> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        boardService.updateBoard(boradUpdateDto, token);
         return BaseResponse.ok(SuccessCode.BOARD_UPDATE_SUCCESS, boradUpdateDto);
     }
     @DeleteMapping("/board/{id}")
-    public BaseResponse<Integer> deleteBoard(@PathVariable(name = "id") int id) {
-        boardService.deleteBoard(id);
+    public BaseResponse<Integer> deleteBoard(@PathVariable(name = "id") int id,  @RequestHeader("Authorization") String authorizationHeader)  {
+        String token = authorizationHeader.replace("Bearer ", "");
+        boardService.deleteBoard(id, token);
         return BaseResponse.ok(SuccessCode.BOARD_DELETE_SUCCESS, id);
     }
 }

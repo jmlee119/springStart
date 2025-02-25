@@ -24,7 +24,9 @@ public enum ErrorCode {
     BOARD_UPDATE_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3004, "글 수정 실패"),
     BOARD_DELETE_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3005, "글 삭제 실패"),
     BOARD_TYPE_UNDEFINED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3006, "게시판 유형을 확인"),
-
+    
+    BOARD_USER_UPDATE_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3007, "본인의 글만 수정 가능"),
+    BOARD_USER_DELETE_FAILED(HttpStatus.BAD_REQUEST,Boolean.FALSE, 3008, "본인의 글만 삭제 가능"),
 
 
     //9000 ~ 9999

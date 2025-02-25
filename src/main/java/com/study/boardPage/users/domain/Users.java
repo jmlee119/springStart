@@ -20,7 +20,7 @@ import java.util.List;
 public class Users  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
