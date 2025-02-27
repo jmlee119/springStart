@@ -1,6 +1,7 @@
 package com.study.boardPage.users.domain;
 
 import com.study.boardPage.board.domain.Board;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Users  {
     
     // status 1 활성 / 2 탈퇴 / 3 관리자 / 4 휴먼
     private int status;
+    @Nullable
     private LocalDateTime lastLogin;
 
     @OneToMany(cascade = CascadeType.REMOVE)

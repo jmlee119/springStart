@@ -44,23 +44,26 @@ public class UserService {
         users.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         users.setNickname(signupDto.getNickname());
         users.setStatus(1);
-        users.setLastLogin(LocalDateTime.now());
+
         userRepository.save(users);
         return signupDto;
     }
 
     public String login(SignInDto signInDto) {
-        Optional<Users> user = Optional.ofNullable(userRepository.findByEmail(
-                signInDto.getEmail()).orElseThrow(() -> new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED)));
-        if (passwordEncoder.matches(signInDto.getPassword(), user.get().getPassword())) {
-            String accessToken = jwtTokenProvider.getAccessToken(user.get().getId());  // 유저의 ID로 토큰 생성
-            System.out.println(accessToken);
+        Optional<Users> optionalUser = userRepository.findByEmail(signInDto.getEmail());
+
+        Users user = optionalUser.orElseThrow(() -> new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED));
+
+        if (passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) {
+            user.setLastLogin(LocalDateTime.now());
+            userRepository.save(user);
+
+            String accessToken = jwtTokenProvider.getAccessToken(user.getId()); // 토큰 생성
             return accessToken;
-        }
-        else{
+        } else {
             throw new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED);
         }
-
     }
+
 
 }
