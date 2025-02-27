@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,9 @@ public class Users  {
     @Column(unique = true, length = 20)
     private String nickname;
     
-    // status 1 활성 / 2 탈퇴 / 3 관리자
+    // status 1 활성 / 2 탈퇴 / 3 관리자 / 4 휴먼
     private int status;
+    private LocalDateTime lastLogin;
 
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Board> board;
