@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Board {
+public class Board implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -24,4 +24,13 @@ public class Board {
     private String title;
     private String content;
     private LocalDateTime rgdt;
+
+    @ManyToOne
+    private Users users;
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+        this.rgdt = LocalDateTime.now();
+    }
 }
