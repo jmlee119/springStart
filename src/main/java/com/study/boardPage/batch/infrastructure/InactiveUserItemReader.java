@@ -22,7 +22,8 @@ public class InactiveUserItemReader implements ItemReader<Users> {
     public void init() {
         LocalDateTime sixMonthsAgo = LocalDateTime.now().minusMonths(6);
         // 현재 시간에서 6개월을 빼서, 6개월 이전의 날짜를 계산
-        List<Users> inactiveUsers = userBatchRepository.findByLastLoginBeforeAndStatusNot(sixMonthsAgo, 1);
+        List<Users> inactiveUsers = userBatchRepository.findByLastLoginBeforeAndStatus(sixMonthsAgo, 1);
+        inactiveUsers.forEach(System.out::println);
         // 6개월 이상 로그인하지 않고, 상태가 1인 사용자
         this.iterator = inactiveUsers.iterator();
         // 조회된 사용자 리스트를 iterator 로 변환하여 필드에 할당, 데이터를 순차적으로 읽을 수 있음

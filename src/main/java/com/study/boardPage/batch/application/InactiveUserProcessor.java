@@ -9,6 +9,7 @@ public class InactiveUserProcessor implements ItemProcessor<Users,Users> {
     @Override
     public Users process(Users users) {
         users.setStatus(4);
+        System.out.println("Update USer : " + users);
         return users;
     }
 
