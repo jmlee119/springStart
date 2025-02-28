@@ -1,40 +1,48 @@
 package com.study.boardPage.board.presentation;
 
 import com.study.boardPage.board.application.BoardService;
-import com.study.boardPage.board.domain.Board;
+import com.study.boardPage.board.dto.req.BoardCreateDto;
+import com.study.boardPage.board.dto.req.BoradUpdateDto;
 import com.study.boardPage.board.dto.resp.BoardAllDto;
 import com.study.boardPage.board.dto.resp.BoardReadDto;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.study.boardPage.global.response.BaseResponse;
+import com.study.boardPage.global.response.SuccessCode;
+import org.springframework.web.bind.annotation.*;
 @RestController // controller는 view 를 반환 restcontroller data 반환
-@RequestMapping("/api/v1/board")
+@RequestMapping("/api/v1")
 public class BoardController {
-
     private final BoardService boardService;
+
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<BoardReadDto> getBoardID(@PathVariable(name="id") int id) {
+    @GetMapping("/board/{id}")
+    public BaseResponse<BoardReadDto> getBoardID(@PathVariable(name = "id") int id){
         BoardReadDto board = boardService.getBoardById(id);
-        if (board != null) {
-            return new ResponseEntity<>(board, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-    @GetMapping("/list")
-    public ResponseEntity<BoardAllDto> getBoardAll() {
-        BoardAllDto board = boardService.getAllBoards();
-        if (board != null) {
-            return new ResponseEntity<>(board, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return BaseResponse.ok(SuccessCode.BOARD_READ_SUCCESS, board);
     }
 
+    @GetMapping("/board")
+    public BaseResponse<BoardAllDto> getBoardAll() {
+        BoardAllDto board = boardService.getAllBoards();
+        return BaseResponse.ok(SuccessCode.BOARD_READALL_SUCCESS, board);
+    }
+    @PostMapping("/board")
+    public BaseResponse<BoardCreateDto> addBoard(@RequestBody BoardCreateDto boardCreateDto, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        boardService.addBoard(boardCreateDto, token);
+        return BaseResponse.ok(SuccessCode.BOARD_CREATE_SUCCESS, boardCreateDto);
+    }
+    @PatchMapping("/board")
+    public BaseResponse<BoradUpdateDto> updateBoard(@RequestBody BoradUpdateDto boradUpdateDto, @RequestHeader("Authorization") String authorizationHeader) {
+        String token = authorizationHeader.replace("Bearer ", "");
+        boardService.updateBoard(boradUpdateDto, token);
+        return BaseResponse.ok(SuccessCode.BOARD_UPDATE_SUCCESS, boradUpdateDto);
+    }
+    @DeleteMapping("/board/{id}")
+    public BaseResponse<Integer> deleteBoard(@PathVariable(name = "id") int id,  @RequestHeader("Authorization") String authorizationHeader)  {
+        String token = authorizationHeader.replace("Bearer ", "");
+        boardService.deleteBoard(id, token);
+        return BaseResponse.ok(SuccessCode.BOARD_DELETE_SUCCESS, id);
+    }
 }

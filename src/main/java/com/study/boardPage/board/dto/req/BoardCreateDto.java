@@ -1,17 +1,16 @@
-package com.study.boardPage.board.dto.resp;
+package com.study.boardPage.board.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
-public class BoardReadDto {
+@NoArgsConstructor
+public class BoardCreateDto {
     private int boardType;
-    private int id;
     private String title;
     private String content;
-    private LocalDateTime rgdt;
-
 }
