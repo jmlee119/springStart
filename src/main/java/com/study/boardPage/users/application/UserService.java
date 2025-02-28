@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -43,36 +44,26 @@ public class UserService {
         users.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         users.setNickname(signupDto.getNickname());
         users.setStatus(1);
+
         userRepository.save(users);
         return signupDto;
     }
 
-//    public UserDetails login(String email) throws UsernameNotFoundException {
-//        Users users = userRepository.findByEmail(email).orElseThrow(()->new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED));
-//        return new org.springframework.security.core.userdetails.User(
-//                users.getEmail(),
-//                users.getPassword(),
-//                new ArrayList<>() // 권한 없이 로그인 처리
-//        );
-//    }
     public String login(SignInDto signInDto) {
-        Optional<Users> user = Optional.ofNullable(userRepository.findByEmail(
-                signInDto.getEmail()).orElseThrow(() -> new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED)));
-        if (passwordEncoder.matches(signInDto.getPassword(), user.get().getPassword())) {
-            String accessToken = jwtTokenProvider.getAccessToken(user.get().getId());  // 유저의 ID로 토큰 생성
-            System.out.println(accessToken);
-//
-//            // SignInDto에 토큰과 아이디를 담아서 반환
-//            SignInDto result = new SignInDto();
-//            result.setEmail(signInDto.getEmail());
-//            result.setPassword(accessToken);  // JWT 토큰을 password 필드에 넣을 수 있음
+        Optional<Users> optionalUser = userRepository.findByEmail(signInDto.getEmail());
 
+        Users user = optionalUser.orElseThrow(() -> new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED));
+
+        if (passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) {
+            user.setLastLogin(LocalDateTime.now());
+            userRepository.save(user);
+
+            String accessToken = jwtTokenProvider.getAccessToken(user.getId()); // 토큰 생성
             return accessToken;
-        }
-        else{
+        } else {
             throw new BaseException(ErrorCode.USER_LOGIN_ERROR_FAILED);
         }
-
     }
+
 
 }
